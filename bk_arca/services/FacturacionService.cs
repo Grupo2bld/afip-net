@@ -83,6 +83,19 @@ namespace bk_arca.services
             // Fecha por defecto
             var fecha = dto.FechaEmision?.ToDateTime(TimeOnly.MinValue) ?? DateTime.Today;
 
+
+            var resu = await Client.consultarCondicionesIVAReceptorAsync(new consultarCondicionesIVAReceptorRequest
+            {
+                authRequest = Auth,
+                consultaCondicionesIVAReceptorRequest = new ConsultaCondicionesIVARequestType
+                {
+                    // Asigna aquí las propiedades requeridas, por ejemplo:
+                    codigoTipoComprobante = 6,
+                    // ejemplo: DNI
+                                               // ejemplo: CUIT o DNI del receptor
+                }
+            });
+
             // Número de comprobante
             int numeroComprobante;
             if (dto.NumeroComprobante.HasValue)
@@ -119,6 +132,7 @@ namespace bk_arca.services
                 comprobanteCAERequest = comp
             });
 
+             
             return resp;
         }
 
@@ -282,9 +296,9 @@ namespace bk_arca.services
                 codigoConcepto = (short)dto.ComprobanteConcepto,
 
                 // Receptor
-                codigoTipoDocumento = (short)dto.TipoDocumentoReceptor,
-                numeroDocumento = long.TryParse(dto.NumeroDocumentoReceptor, out var nd) ? nd : 0L,
-                condicionIVAReceptor = (short)dto.CondicionIVAReceptor,
+                codigoTipoDocumento = (short)dto.TipoDocumentoReceptor, codigoTipoDocumentoSpecified = true,
+                numeroDocumento = long.TryParse(dto.NumeroDocumentoReceptor, out var nd) ? nd : 0L, numeroDocumentoSpecified = true,
+                condicionIVAReceptor = 1,
                 condicionIVAReceptorSpecified = true,
 
                 // Totales (en B el precio es CON IVA; evitamos mandar 0s innecesarios)

@@ -95,7 +95,7 @@ namespace bk_arca.services.Utils
             }
 
             
-            var totalSinIva = dto.Items.Sum(x => x.ImporteItem);
+            var totalSinIva = Math.Round(dto.Items.Sum(x => x.PrecioUnitario * x.Cantidad ), 2);
             var totalIva = dto.Items.Sum(x => x.ImporteIva);
 
             // 3) Si no te pasaron subtotales IVA, podemos construirlos simples (p.e. todo 21%).
@@ -135,7 +135,7 @@ namespace bk_arca.services.Utils
                 totalIva = dto.SubtotalesIVA.Sum(x => x.Importe);
                 var baseImponible = totalSinIva;
 
-                dto.ImporteGravado = baseImponible;
+                dto.ImporteGravado = dto.Items.Sum(x => x.PrecioUnitario);
                 // Respetamos lo que venga en NoGravado/Exento si lo enviaste; si no, mantenemos 0
                 dto.ImporteSubtotal = baseImponible;
                 dto.ImporteTotal = totalSinIva + totalIva;
