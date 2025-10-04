@@ -135,7 +135,7 @@ namespace bk_arca.services.Utils
                 totalIva = dto.SubtotalesIVA.Sum(x => x.Importe);
                 var baseImponible = totalSinIva;
 
-                dto.ImporteGravado = dto.Items.Sum(x => x.PrecioUnitario);
+                dto.ImporteGravado = baseImponible;
                 // Respetamos lo que venga en NoGravado/Exento si lo enviaste; si no, mantenemos 0
                 dto.ImporteSubtotal = baseImponible;
                 dto.ImporteTotal = totalSinIva + totalIva;

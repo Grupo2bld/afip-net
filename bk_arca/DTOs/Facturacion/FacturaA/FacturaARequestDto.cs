@@ -69,6 +69,8 @@ namespace bk_arca.DTOs.Facturacion.FacturaA
         public List<ItemARequestDto> Items { get; set; } = new();
 
         // (Opcional) Resumen de IVA validatorio
-        public List<SubtotalIVARequestDto>? SubtotalesIVA { get; set; }
+        public List<SubtotalIVARequestDto>? SubtotalesIVA { get; set; }  
+
+         
     }
 }
